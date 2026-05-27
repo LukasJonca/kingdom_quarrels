@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "General Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.625rem;
+
+    --background: 0.08 0.01 250;
+    --foreground: 0.97 0.01 0;
+    --card: 0.15 0.02 250;
+    --card-foreground: 0.97 0.01 0;
+    --popover: 0.2 0.01 250;
+    --popover-foreground: 0.97 0.01 0;
+    --primary: 0.62 0.18 260;
+    --primary-foreground: 0.08 0.01 250;
+    --secondary: 0.55 0.22 30;
+    --secondary-foreground: 0.97 0.01 0;
+    --muted: 0.4 0.05 250;
+    --muted-foreground: 0.75 0.02 0;
+    --accent: 0.68 0.2 50;
+    --accent-foreground: 0.08 0.01 250;
+    --destructive: 0.58 0.22 30;
+    --destructive-foreground: 0.97 0.01 0;
+    --border: 0.35 0.03 250;
+    --input: 0.2 0.01 250;
+    --ring: 0.7 0.22 50;
+    --sidebar: 0.12 0.01 250;
+    --sidebar-foreground: 0.97 0.01 0;
+    --sidebar-primary: 0.65 0.18 50;
+    --sidebar-primary-foreground: 0.97 0.01 0;
+    --sidebar-accent: 0.78 0.25 50;
+    --sidebar-accent-foreground: 0.08 0.01 250;
+    --sidebar-border: 0.3 0.03 250;
+    --sidebar-ring: 0.75 0.22 50;
+  }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground font-body antialiased; }
+}
+
+@layer utilities {
+  @font-face {
+    font-family: "Space Grotesk";
+    src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "General Sans";
+    src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Press Start 2P";
+    src: url("/assets/fonts/PressStart2P.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  .transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+  .grid-cell {
+    background-clip: padding-box;
+    border: 1px solid oklch(var(--border));
+  }
+
+  .team-blue { color: oklch(var(--primary)); border-color: oklch(var(--primary) / 0.5); }
+  .team-red  { color: oklch(var(--secondary)); border-color: oklch(var(--secondary) / 0.5); }
+
+  .range-highlight {
+    background: rgba(255, 220, 0, 0.35);
+    border: 2px solid rgba(255, 200, 0, 0.6);
+  }
+
+  .attack-target-highlight {
+    background-color: oklch(0.5 0.35 25 / 0.4);
+    border: 3px solid oklch(0.65 0.35 25 / 0.9);
+    box-shadow: inset 0 0 6px oklch(0.65 0.35 25 / 0.5), 0 0 8px oklch(0.65 0.35 25 / 0.35);
+  }
+
+  .tile-selected {
+    box-shadow: inset 0 0 0 2px oklch(var(--accent));
+    background-color: oklch(var(--accent) / 0.1);
+  }
+
+  .tile-void {
+    background-color: oklch(0.05 0.005 250);
+    cursor: default;
+    pointer-events: none;
+    border: none;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  body {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    font-family: "Press Start 2P", monospace;
+  }
+}
+
+.ghost-unit { opacity: 0.65; pointer-events: none; }
+.ghost-unit-pending { opacity: 0.6; pointer-events: none; }
+
+.path-tile {
+  background-color: oklch(0.65 0.2 220 / 0.35) !important;
+  border: 1px solid oklch(0.65 0.2 220 / 0.7) !important;
+}
+.path-tile-attack {
+  background-color: oklch(0.65 0.22 50 / 0.35) !important;
+  border: 1px solid oklch(0.65 0.22 50 / 0.7) !important;
+}
+.ghost-tile {
+  box-shadow: inset 0 0 0 2px oklch(0.75 0.2 220 / 0.8);
+  background-color: oklch(0.65 0.2 220 / 0.15) !important;
+}
+.ghost-tile-attack {
+  box-shadow: inset 0 0 0 3px oklch(0.65 0.35 25 / 1.0), 0 0 12px oklch(0.65 0.35 25 / 0.6), 0 0 20px oklch(0.65 0.35 25 / 0.25);
+  background-color: oklch(0.5 0.35 25 / 0.38) !important;
+  transform: scale(1.05);
+  z-index: 2;
+}
+.pixel-tile {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: none;
+}
+@keyframes water-wave {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+.water-animated .wave-row-1 { animation: water-wave 1.2s ease-in-out infinite; }
+.water-animated .wave-row-2 { animation: water-wave 1.2s ease-in-out infinite reverse; }

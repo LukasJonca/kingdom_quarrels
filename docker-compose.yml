@@ -1,0 +1,24 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+    restart: unless-stopped
+    # Port 3001 is intentionally NOT published to the host —
+    # the client nginx container reaches it over the internal Docker network.
+    # Uncomment the line below if you want direct API access for debugging:
+    # ports:
+    #   - "3001:3001"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    restart: unless-stopped
